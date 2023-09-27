@@ -43,6 +43,18 @@ const gameController = () => {
         player('Player Two', 'O')
     ];
 
+    const board = gameboard();
+    let activePlayer = players[0];
+
+    const getActivePlayer = () => activePlayer;
+
+    const switchPlayerTurn = () => {
+        activePlayer = getActivePlayer() === players[0] ? players[1] : players[0];
+    };
+
+    // Initial play game message
+    printNewRound();
+    
     return {playRound};
 };
 
