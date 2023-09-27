@@ -1,5 +1,4 @@
-const gameboard = (() => {
-    // Create gameboard
+const gameboard = () => {
     const rows = 3;
     const columns = 3;
     const board = []; 
@@ -15,6 +14,11 @@ const gameboard = (() => {
         return board.map(row => row.map(column => column.getMarker()));
     };
 
+    const addMarker = (row, column, player) => {
+        if (board[row][column].getMarker() !== '') return;
+        board[row][column].changeMarker(player);
+    };
+
     function cell() {
         let marker = '';
         const changeMarker = (player) => {
@@ -24,27 +28,22 @@ const gameboard = (() => {
         return {changeMarker, getMarker}
     };
     
-    console.log(getBoard());
-})();
+    return {getBoard, addMarker};
+};
 
 
 
-
-const gameController = (() => {
+const gameController = () => {
     const player = (name, marker) => {
         return {name, marker};
     };
     
-    const playerOne = player('Player One', 'X');
-    const playerTwo = player('Player Two', 'O');
+    const players = [
+        player('Player One', 'X'),
+        player('Player Two', 'O')
+    ];
 
-    console.log(playerOne, playerTwo);
-})();
+    return {playRound};
+};
 
-
-
-
-// Create gameboard
-// Add markers to gameboard
-// Create players
-// Switch turn
+const game = gameController();
