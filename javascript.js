@@ -10,6 +10,10 @@ const gameboard = (() => {
             board[i].push(cell());
         }
     }
+    
+    const getBoard = () => {
+        return board.map(row => row.map(column => column.getMarker()));
+    };
 
     function cell() {
         let marker = '';
