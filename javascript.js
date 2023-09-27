@@ -52,10 +52,15 @@ const gameController = () => {
         activePlayer = getActivePlayer() === players[0] ? players[1] : players[0];
     };
 
+    const printNewRound = () => {
+        console.log(board.getBoard());
+        console.log(`It is ${activePlayer.name}'s turn!`);
+    };
+
     // Initial play game message
     printNewRound();
     
-    return {playRound};
+    return {playRound, getBoard: board.getBoard};
 };
 
 const game = gameController();
