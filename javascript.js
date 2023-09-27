@@ -3,13 +3,24 @@ const gameboard = (() => {
     const rows = 3;
     const columns = 3;
     const board = []; 
+
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < columns; j++) {
-            board[i].push('');
+            board[i].push(cell());
         }
     }
-    console.log(board);
+
+    function cell() {
+        let marker = '';
+        const changeMarker = (player) => {
+            marker = player;
+        };
+        const getMarker = () => marker;
+        return {changeMarker, getMarker}
+    };
+    
+    console.log(getBoard());
 })();
 
 
@@ -19,11 +30,12 @@ const gameController = (() => {
     const player = (name, marker) => {
         return {name, marker};
     };
+    
     const playerOne = player('Player One', 'X');
     const playerTwo = player('Player Two', 'O');
+
     console.log(playerOne, playerTwo);
 })();
-
 
 
 
