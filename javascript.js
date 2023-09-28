@@ -57,6 +57,13 @@ const gameController = () => {
         console.log(`It is ${activePlayer.name}'s turn!`);
     };
 
+    const playRound = (row, column) => {
+        console.log(`${getActivePlayer().name} has made their move on row ${row}, column ${column}...`);
+        board.addMarker(row, column, getActivePlayer().marker);
+        switchPlayerTurn();
+        printNewRound();
+    };
+
     // Initial play game message
     printNewRound();
     
