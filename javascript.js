@@ -84,7 +84,26 @@ const gameController = () => {
     // Initial play game message
     printNewRound();
     
-    return {playRound};
+    return {playRound, getBoard: board.getBoard};
 };
 
-const game = gameController();
+
+
+const screenController = () => {
+    const game = gameController();
+    const messageDiv = document.querySelector('.message');
+    const boardDiv = document.querySelector('.board');
+
+    const updateScreen = () => {
+        const board = game.getBoard();
+        board.forEach(row => row.forEach(column => {
+            const cellDiv = document.createElement('div');
+            cellDiv.classList.add('cell');
+            cellDiv.textContent = column.getMarker();
+            boardDiv.appendChild(cellDiv);
+        }));
+    };
+    updateScreen();
+};
+
+screenController();
