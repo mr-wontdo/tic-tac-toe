@@ -96,12 +96,17 @@ const screenController = () => {
 
     const updateScreen = () => {
         const board = game.getBoard();
-        board.forEach(row => row.forEach(column => {
-            const cellDiv = document.createElement('div');
-            cellDiv.classList.add('cell');
-            cellDiv.textContent = column.getMarker();
-            boardDiv.appendChild(cellDiv);
-        }));
+        board.forEach((row, index) => {
+            const rowIndex = index;
+            row.forEach((column, index) => {
+                const cellButton = document.createElement('button');
+                cellButton.classList.add('cell');
+                cellButton.dataset.row = rowIndex;
+                cellButton.dataset.column = index;
+                cellButton.textContent = column.getMarker();
+                boardDiv.appendChild(cellButton);
+            });
+        });
     };
     updateScreen();
 };
