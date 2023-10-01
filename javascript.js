@@ -84,18 +84,21 @@ const gameController = () => {
     // Initial play game message
     printNewRound();
     
-    return {playRound, getBoard: board.getBoard};
+    return {playRound, getBoard: board.getBoard, getActivePlayer};
 };
 
 
 
 const screenController = () => {
     const game = gameController();
-    const messageDiv = document.querySelector('.message');
+    const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
         const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
         board.forEach((row, index) => {
             const rowIndex = index;
             row.forEach((column, index) => {
