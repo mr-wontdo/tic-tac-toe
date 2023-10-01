@@ -60,6 +60,7 @@ const gameController = () => {
     };
 
     const playRound = (row, column) => {
+        if (board.getBoard()[row][column].getMarker() !== '') return;
         console.log(`${getActivePlayer().name} has made their move on row ${row}, column ${column}...`);
         board.addMarker(row, column, getActivePlayer().marker);
         checkWinner();
