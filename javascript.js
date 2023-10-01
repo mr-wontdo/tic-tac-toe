@@ -73,8 +73,8 @@ const gameController = () => {
             markedBoard[1].every(row => row === markedBoard[1][0]) && markedBoard[1][0] !== '' ||
             markedBoard[2].every(row => row === markedBoard[2][0]) && markedBoard[2][0] !== '' ||
             [markedBoard[0][0], markedBoard[1][0], markedBoard[2][0]].every(column => column === markedBoard[0][0]) && markedBoard[0][0] !== '' ||
-            [markedBoard[0][1], markedBoard[1][1], markedBoard[2][1]].every(column => column === markedBoard[0][0]) && markedBoard[0][1] !== '' ||
-            [markedBoard[0][2], markedBoard[1][2], markedBoard[2][2]].every(column => column === markedBoard[0][0]) && markedBoard[0][2] !== '' ||
+            [markedBoard[0][1], markedBoard[1][1], markedBoard[2][1]].every(column => column === markedBoard[0][1]) && markedBoard[0][1] !== '' ||
+            [markedBoard[0][2], markedBoard[1][2], markedBoard[2][2]].every(column => column === markedBoard[0][2]) && markedBoard[0][2] !== '' ||
             [markedBoard[0][0], markedBoard[1][1], markedBoard[2][2]].every(diagonal => diagonal === markedBoard[0][0]) && markedBoard[0][0] !== '' ||
             [markedBoard[2][0], markedBoard[1][1], markedBoard[0][2]].every(diagonal => diagonal === markedBoard[0][2]) && markedBoard[2][0] !== '' ) {
             alert(`The winner is ${activePlayer.name}!`);
@@ -95,22 +95,33 @@ const screenController = () => {
     const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
+        boardDiv.textContent = '';
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
         board.forEach((row, index) => {
-            const rowIndex = index;
+            const selectedRowIndex = index;
             row.forEach((column, index) => {
                 const cellButton = document.createElement('button');
                 cellButton.classList.add('cell');
-                cellButton.dataset.row = rowIndex;
+                cellButton.dataset.row = selectedRowIndex;
                 cellButton.dataset.column = index;
                 cellButton.textContent = column.getMarker();
                 boardDiv.appendChild(cellButton);
             });
         });
     };
+
+    const clickHandlerBoard = (e) => {
+        const selectedRowIndex = e.target.dataset.row;
+        const selectedColumnIndex = e.target.dataset.column;
+        if (!(selectedRowIndex && selectedColumnIndex)) return;
+        game.playRound(selectedRowIndex, selectedColumnIndex);
+        updateScreen();
+    };
+
+    boardDiv.addEventListener('click', clickHandlerBoard);
     updateScreen();
 };
 
