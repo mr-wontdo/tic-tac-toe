@@ -63,7 +63,6 @@ const gameController = () => {
         if (board.getBoard()[row][column].getMarker() !== '') return;
         console.log(`${getActivePlayer().name} has made their move on row ${row}, column ${column}...`);
         board.addMarker(row, column, getActivePlayer().marker);
-        checkWinner();
         switchPlayerTurn();
         printNewRound();
     };
@@ -79,6 +78,8 @@ const gameController = () => {
             [markedBoard[0][0], markedBoard[1][1], markedBoard[2][2]].every(diagonal => diagonal === markedBoard[0][0]) && markedBoard[0][0] !== '' ||
             [markedBoard[2][0], markedBoard[1][1], markedBoard[0][2]].every(diagonal => diagonal === markedBoard[0][2]) && markedBoard[2][0] !== '' ) {
             alert(`The winner is ${activePlayer.name}!`);
+        } else if (!markedBoard[0].concat(markedBoard[1], markedBoard[2]).includes('')) {
+            alert('Tied!');
         }
     };
     
@@ -94,6 +95,7 @@ const screenController = () => {
     const game = gameController();
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
+    const restartButton = document.querySelector('.restart');
 
     const updateScreen = () => {
         boardDiv.textContent = '';
@@ -123,6 +125,7 @@ const screenController = () => {
     };
 
     boardDiv.addEventListener('click', clickHandlerBoard);
+    restartButton.addEventListener('click', screenController);
     updateScreen();
 };
 
