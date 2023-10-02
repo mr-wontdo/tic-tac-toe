@@ -91,15 +91,23 @@ body {
 }
 
 .board {
+    background-color: black;
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    gap: 12px;
+    gap: 6px;
     height: 600px;
     width: 600px;
 }
 
 .cell {
     font-size: 10rem;
+    background-color: var(--dusk-purple);
+    border: 1px solid var(--dusk-purple);
+}
+
+.cell:focus,
+.restart:focus {
+    outline: none;
 }
 
 .restart-container {
@@ -111,6 +119,7 @@ body {
 
 .restart {
     font-size: 2rem;
+    background-color: var(--daylight-pink);
     border-radius: 8px;
     padding: 12px 32px;
 }
