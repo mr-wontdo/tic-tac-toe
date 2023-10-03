@@ -120,6 +120,11 @@ body {
 .restart {
     font-size: 2rem;
     background-color: var(--daylight-pink);
+    border: 1px solid var(--daylight-pink);
     border-radius: 8px;
     padding: 12px 32px;
+}
+
+.restart:focus {
+    outline: 1px solid black;
 }
