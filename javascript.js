@@ -63,7 +63,7 @@ const gameController = () => {
         if (board.getBoard()[row][column].getMarker() !== '') return;
         console.log(`${getActivePlayer().name} has made their move on row ${row}, column ${column}...`);
         board.addMarker(row, column, getActivePlayer().marker);
-        switchPlayerTurn();
+        if (checkWinner() !== true && checkTie() !== true) switchPlayerTurn();
         printNewRound();
     };
 
@@ -77,16 +77,18 @@ const gameController = () => {
             [markedBoard[0][2], markedBoard[1][2], markedBoard[2][2]].every(column => column === markedBoard[0][2]) && markedBoard[0][2] !== '' ||
             [markedBoard[0][0], markedBoard[1][1], markedBoard[2][2]].every(diagonal => diagonal === markedBoard[0][0]) && markedBoard[0][0] !== '' ||
             [markedBoard[2][0], markedBoard[1][1], markedBoard[0][2]].every(diagonal => diagonal === markedBoard[0][2]) && markedBoard[2][0] !== '' ) {
-            alert(`The winner is ${activePlayer.name}!`);
-        } else if (!markedBoard[0].concat(markedBoard[1], markedBoard[2]).includes('')) {
-            alert('Tied!');
+            return true;
         }
     };
+
+    const checkTie = () => {
+        const markedBoard = board.getBoard().map(row => row.map(column => column.getMarker()));
+        if (!markedBoard[0].concat(markedBoard[1], markedBoard[2]).includes('')) return true;
+    }
     
-    // Initial play game message
     printNewRound();
     
-    return {playRound, getBoard: board.getBoard, getActivePlayer};
+    return {playRound, getBoard: board.getBoard, getActivePlayer, checkWinner, checkTie};
 };
 
 
@@ -114,11 +116,18 @@ const screenController = () => {
                 boardDiv.appendChild(cellButton);
             });
         });
+
+        if (game.checkWinner() === true) {
+            playerTurnDiv.textContent = `${game.getActivePlayer().name} has won the game!`;
+        } else if (game.checkTie() === true) {
+            playerTurnDiv.textContent = `The game is tied!`;
+        }
     };
 
     const clickHandlerBoard = (e) => {
         const selectedRowIndex = e.target.dataset.row;
         const selectedColumnIndex = e.target.dataset.column;
+        if (game.checkWinner() === true || game.checkTie()) return;
         if (!(selectedRowIndex && selectedColumnIndex)) return;
         game.playRound(selectedRowIndex, selectedColumnIndex);
         updateScreen();
