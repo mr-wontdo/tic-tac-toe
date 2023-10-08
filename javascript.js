@@ -41,8 +41,8 @@ const gameController = () => {
     };
     
     const players = [
-        player('Player One', 'X'),
-        player('Player Two', 'O')
+        player('Player X', 'X'),
+        player('Player O', 'O')
     ];
 
     const board = gameboard();
